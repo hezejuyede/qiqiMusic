@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './common/stylus/index.styl'
 import 'babel-polyfill'
+import store from './store'
 import fastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueLazylord from 'vue-lazyload'
@@ -20,5 +21,6 @@ fastClick.attach(document.body);
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });

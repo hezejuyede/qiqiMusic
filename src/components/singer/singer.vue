@@ -1,10 +1,12 @@
 <template>
   <div class="singger" ref="singer">
-    <listview :data="singers"></listview>
+    <listview @select="selectSinger" :data="singers"></listview>
+    <router-view></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapMutations} from 'vuex'
 
   //引入ListViewz组件
   import ListView from '../../base/listview/listview.vue'
@@ -33,9 +35,17 @@
     },
     created() {
       //页面加载成功就调用_getSingerList()方法
-      this._getSingerList()
+      setTimeout(()=>{
+        this._getSingerList();
+      },2000)
     },
     methods: {
+      selectSinger(singer){
+        this.$router.push({
+          path:`/singer/${singer.id}`
+        });
+        this.setSinger(singer)
+      },
       //调用取得歌手的方法，
       _getSingerList() {
 
@@ -46,12 +56,9 @@
           if (res.code === ERR_0K) {
             //将调用的data.list数据赋值给定义的歌手数组
             this.singers = this._normalizeSinger(res.data.list);
-
-            console.log(this.singers)
           }
         });
       },
-
       //取得的数据不是我们需要的类型，要遍历和处理得到的数据，先定义_normalizeSinger方法。
       _normalizeSinger(list) {
         //定义一个map对象
@@ -100,7 +107,10 @@
         });
         //将热门和字母排序数组链接到一起
         return hot.concat(ret)
-      }
+      },
+      ...mapMutations({
+        setSinger:'SET_SINGER'
+      })
 
     },
     componenfs: {

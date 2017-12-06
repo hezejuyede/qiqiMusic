@@ -394,7 +394,7 @@
     .loading-container
       position: absolute
       width: 100%
-      top: 50%
+      top: 35%
       transform: translateY(-50%)
 </style>
 
